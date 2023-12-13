@@ -1,23 +1,20 @@
 %%
-%% This is file `nlproceedings.cls'.
-%%
-%% Copyright 2020-2021 Takuto ASAKURA
+%% Copyright 2020-2022 Takuto ASAKURA
+%% Copyright 2023- Yoshitaka HARA
 %%
 %% This class is distributed under the MIT License.
 %%
-
-%% Note: このファイルは日本語文字を含みます.
 
 %% 依存パッケージ
 \RequirePackage{expl3,xparse,l3keys2e}
 
 %% クラス宣言
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage {nlproceedings} {2021-11-30} {1.0.0}
-  {Japanese document class for the proceedings of nlproceedings}
+\ProvidesExplPackage {rbproceedings} {2023-12-12} {1.0.0}
+  {Japanese document class for the proceedings of rbproceedings}
 
 %% メッセージ
-\msg_new:nnn { nlproceedings } { disallowed-option }
+\msg_new:nnn { rbproceedings } { disallowed-option }
   { Option~ '#1'~ is~ disallowed;~ skipping. }
 
 %% (u)pTeX 用パッチ類
@@ -58,20 +55,19 @@
     \cs_if_exist:NF \l_keys_key_str
       { \cs_set_eq:NN \l_keys_key_str \l_keys_key_tl }
     \seq_if_in:NoTF \g__nlpr_disallowed_options_seq { \l_keys_key_str }
-      { \msg_warning:nnx { nlproceedings } { disallowed-option } { \l_keys_key_str } }
+      { \msg_warning:nnx { rbproceedings } { disallowed-option } { \l_keys_key_str } }
       { \clist_gput_right:No \g__nlpr_options_clist { \CurrentOption } }
   }
 
 % オプション実行
-\keys_define:nn { nlproceedings / option }
+\keys_define:nn { rbproceedings / option }
   {
     english .bool_gset:N = \g_nlpr_english_bool,
     english .default:n = true,
     unknown .code:n = \__nlpr_process_class_option:
   }
-\ProcessKeysOptions { nlproceedings / option }
+\ProcessKeysOptions { rbproceedings / option }
 \PassOptionsToClass { \g__nlpr_options_clist } { jlreq }
-
 
 %% 基本版面設計
 % 規定オプションを指定して jlreq を読み込む
@@ -127,7 +123,7 @@
     \tl_set:Nn \contentsname { Table~ of~ Contents }
     \tl_set:Nn \refname { References }
     \tl_set:Nn \indexname { Index }
-    \tl_set:Nn \listfigurename { List~ of~ Figures}
+    \tl_set:Nn \listfigurename { List~ of~ Figures }
     \tl_set:Nn \figurename { Figure }
     \tl_set:Nn \listtablename { List~ of~ Tables }
     \tl_set:Nn \tablename { Table }
