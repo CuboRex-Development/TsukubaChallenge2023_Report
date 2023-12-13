@@ -1,19 +1,16 @@
 %%
-%% This is file `rbproceedings.cls'.
-%%
-%% Copyright 2020-2021 Takuto ASAKURA
+%% Copyright 2020-2022 Takuto ASAKURA
+%% Copyright 2023- Yoshitaka HARA
 %%
 %% This class is distributed under the MIT License.
 %%
-
-%% Note: このファイルは日本語文字を含みます.
 
 %% 依存パッケージ
 \RequirePackage{expl3,xparse,l3keys2e}
 
 %% クラス宣言
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplPackage {rbproceedings} {2021-11-30} {1.0.0}
+\ProvidesExplPackage {rbproceedings} {2023-12-12} {1.0.0}
   {Japanese document class for the proceedings of rbproceedings}
 
 %% メッセージ
@@ -71,7 +68,6 @@
   }
 \ProcessKeysOptions { rbproceedings / option }
 \PassOptionsToClass { \g__nlpr_options_clist } { jlreq }
-
 
 %% 基本版面設計
 % 規定オプションを指定して jlreq を読み込む
