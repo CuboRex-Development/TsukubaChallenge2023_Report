@@ -77,35 +77,41 @@ CuboRexでは，一輪車を電動化した“E-cat kit2”や走破性の高い
     \centering
     \begin{minipage}[b]{0.45\linewidth}
         \centering
-        \includegraphics[keepaspectratio,width=70mm]{fig/cugo_ros.jpg}
++        \includegraphics[keepaspectratio,width=70mm]{fig/cugo_tsukuba.png}
         \caption{つくばチャレンジ仕様 CuGo}
         \label{fig:cugo_ros_tsukuba}
     \end{minipage}
     \begin{minipage}[b]{0.45\linewidth}
         \centering
-        \begin{tabular}{llcc}
+        \caption{ロボット諸元}
+        \label{tab:cugo_ros_tsukuba_spec}
+        \begin{tabular}{lc}
             \hline
-            日本語 & Japanese & ほげほげ & ふげふげ \\
-            英語 & English & hogehoge & fugefuge \\
+            前長     & 0.7 [m] \\
+            全幅     & 0.7 [m] \\
+            全高     & 1.3 [m] \\
+            重量     & 33  [kg] \\
+            最高速度 & 3.5 [m/s] \\
+            駆動機構 & クローラ \\
             \hline
         \end{tabular}
-        \caption{ロボット諸元}
-        \label{fig:cugo_ros_tsukuba_spec}
     \end{minipage}
 \end{figure*}
 
-本年度の実験に使用したロボットの外観を以下の図\ref{fig:cugo_ros}に示す．ハードウェアの構成を表1に示す．つくばチャレンジ走行用ロボットには，CuboRex製自律走行ロボットの開発用プラットフォームである，“ROS開発キット CuGo V3”をベースに課題に必要な装備を追加した．
+本年度の実験に使用したロボットの外観を以下の図 \ref{fig:cugo_ros_tsukuba} に示す．ハードウェアの構成を表 \ref{tab:cugo_ros_tsukuba_spec} に示す．つくばチャレンジ走行用ロボットには，CuboRex製自律走行ロボットの開発用プラットフォームである，“ROS開発キット CuGo V3”をベースに課題に必要な装備を追加した．
 \subsection{ROS開発キット CuGo V3}
 “ROS開発キット”は，汎用クローラユニットであるCuGo V3，それを正確に制御するマイクロコントローラ，ROSを実行するLinuxコンピュータ，それを駆動するバッテリーや電源システムがオールインワンとなったパッケージ製品である．これに必要に応じて3D LiDARやGNSS，カメラなどの装備を加えることで，最小限の労力で屋外を走行するクローラロボットの開発を開始することができる．
 
 
 
 \subsection{つくばチャレンジ仕様}
-本年度のつくばチャレンジでは，“ROS開発キット”にGNSS，デバッグ用モニター，モニター確認用のひさし，機体拡張のため押しやすい位置に非常停止スイッチを再設置する変更を行った．後述するが，ナビゲーションシステムに使用したセンサは2DLidar，GNSS，ホイールオドメトリのみという非常にシンプルな構成となっている．計算資源としてもJetson Orin NXというシングルボードコンピュータ1台とモータ制御用のArduino UNO R3のコントローラで構成されており，比較的安価で製造しやすい屋外走行ロボットとなった．
+本年度のつくばチャレンジでは，“ROS開発キット”にGNSS，デバッグ用モニター，モニター確認用のひさし，転倒防止用のステー，機体拡張のため押しやすい位置に非常停止スイッチを再設置する変更を行った．後述するが，ナビゲーションシステムに使用したセンサは2DLidar，GNSS，ホイールオドメトリのみという非常にシンプルな構成となっている．計算資源としてもJetson Orin NXというシングルボードコンピュータ1台とモータ制御用のArduino UNO R3のコントローラで構成されており，比較的安価で製造しやすい屋外走行ロボットとなった．
 
 \section{ナビゲーションシステム}
 \subsection{ナビゲーション概要}
-本年度のつくばチャレンジのナビゲーションシステム構成図を図\ref{fig:system}に示す．このシステムでは，基本的にみちびきのセンチメーター級測位補強信号を使って補正したGNSSの位置を使用して目的地を目指す．2023年のコースからGNSSの信号を遮る屋根や建物の直下を通るようになったため，対策が必要である．このエリアを通過するとき，図XのようにGNSSの測位精度の悪化を確認できたため，このエリアに限って地図を作成し地図に対して自己位置推定を行った．GNSSを使用しないエリアを通過した後，ふたたびGNSSの自己位置推定に切り替えて走行することにより，大規模な地図を作成することなく長距離の自律走行を実現した．この章では，以下の順番でナビゲーションシステムの詳細について説明する．
+本年度のつくばチャレンジのナビゲーションシステム構成図を図\ref{fig:system}に示す．このシステムでは，基本的にみちびきのセンチメーター級測位補強信号を使って補正したGNSSの位置を使用して目的地を目指す．
+2023年のコースからGNSSの信号を遮る屋根や建物の直下を通るようになったため，対策が必要である．このエリアを通過するとき， 図\ref{fig:cityhall_fix} のようにGNSSの測位精度の悪化を確認できたため，このエリアに限って地図を作成し地図に対して自己位置推定を行った．GNSSを使用しないエリアを通過した後，ふたたびGNSSの自己位置推定に切り替えて走行することにより，大規模な地図を作成することなく長距離の自律走行を実現した．この章では，以下の順番でナビゲーションシステムの詳細について説明する．
+
 GNSSによる自己位置推定
 2D MAPによる自己位置推定
 センサフュージョン
@@ -124,14 +130,39 @@ Waypointの設定
 
 \begin{figure}[h]
     \centering   
+    \includegraphics[keepaspectratio,width=80mm]{fig/cityhall_fix.png}
+    \caption{確認走行区間のfix状況，青:fix，黄:float，赤:GDPS}
+    \label{fig:cityhall_fix}
+\end{figure}
+
+\begin{figure}[h]
+    \centering   
     \includegraphics[keepaspectratio,width=80mm]{fig/map.png}
     \caption{作成した確認走行区間の2D地図}
     \label{fig:map}
 \end{figure}
 
 \subsection{GNSSによる自己位置推定}
-CLASつかったよほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ
-図のように市庁舎北とピロティの区間以外はとても良かったよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよ
+ロボットの内部にCLAS受信モジュールD9CX1とRTKモジュールF9PX1を，機体上部にGNSSアンテナJCA228Eをそれぞれ1組搭載し，CLASによる測位を5Hzで行った．
+CLASとはセンチメートル級測位サービスを示し，準天頂衛星みちびきが配信する補強信号を受信することで，日本国内では精度の高い測位が可能となるサービスである．
+CLASの移動体における水平方向の測位精度は，$12[\mathrm{cm} (95 \%)]$以下である．
+大会においては，本走行コースのゴール地点の緯度・経度 $(36.0826686 ,140.0775115)$ を原点として，測位された緯度・経度との差分を自己位置とした．
+ロボットの姿勢角推定は，図\ref{fig:gnss_orientaiton} のように前回時間からの移動量をもとに算出した姿勢を自己位置とした．
+ただし，姿勢角の算出は下記の条件を満たす際のみ適用し，それ以外の状況では姿勢角を算出しなかった。
+\begin{itemize}
+    \item ロボットの直進速度が $0.3[\mathrm{m/s}]$ 以上
+    \item ロボットの旋回速度が $0.3[\mathrm{rad/s}]$ 以下
+\end{itemize}
+姿勢角が算出されない期間における姿勢角の自己位置推定は，後述のセンサフュージョンにより補間した．
+
+
+
+\begin{figure}[h]
+    \centering   
+    \includegraphics[keepaspectratio,width=80mm]{fig/gnss_orientation.png}
+    \caption{GNSSによる姿勢角推定}
+    \label{fig:gnss_orientaiton}
+\end{figure}
 
 \subsection{2D MAPによる自己位置推定}
 ロボット下部に取り付けられた2DLidarを使って図\ref{fig:map}のつくば市庁舎周辺の地図を作成した．2DLidarは地面から120mmの位置に取付てあり，周囲360度，最大30mまでの距離を得ることができる．SLAMはCartographer[9]を利用した．確認走行区間のルートをを1.5周するセンサデータを使い，パラメータを調整して地図を作成した．作成した地図は図Xに示す．実際のナビゲーションでは，北の屋根があるエリアからピロティを抜けた区間まではこの地図の位置を使用した．
@@ -154,7 +185,11 @@ Waypointの設定はロボットの自己位置をそのまま記憶するツー
 ロボットの自己位置からWaypointまでの走行経路の生成は，ROS 2標準のNavigation2[11]をそのまま利用した．Waypointまでの経路はA*アルゴリズム[12]で算出し，その経路をRegulatedPurePersuit[13]で追従した．
 
 \subsection{障害物回避}
-2DLidarで検知した障害物をコストマップに反映して避ける経路を作ったよ．別に突然出てきた障害物は避ける処理まで時間がかかるから，障害物を検知する点を作ってまずは止まる機構を作ったよほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ
+障害物の回避には2DLidarを使用し，ROS 2標準のNavigation2[11]によるものをそのまま利用した．
+しかし，2DLiDRを使用しているためパイロンのような起伏のある形状の障害物を回避できない，経路生成が行われるより前に衝突する箇所に障害物が発生した際に避けられない，という問題があった．
+そのため，前述の機能に加えて，経路生成より高速で処理が可能な障害物判定機能を追加した．
+具体的な処理は，コストマップで機体前方の5点を常に参照し，定点のコストが閾値以上となった際には停止させるものとした．
+この閾値を低くすることで障害物に対する接近を抑制することが可能となり，起伏のある形状の障害物にも接近せず，衝突を回避できた．
 
 \subsection{その他開発支援ツール}
 現場でのロボットのデバッグは，さまざまな条件の中で何が起きたかを素早く発見し，迅速に修正することが大切である．
@@ -166,16 +201,25 @@ Waypointの設定はロボットの自己位置をそのまま記憶するツー
 走行ハードウェアとしては，CuboRex製のクローラユニットであるCuGo V3を使用した．研究学園前公園の階段の乗降はできないが，必須課題の走行コースで問題になる段差はなかった．7 15の実験走行では，炎天下の中必須課題の走行コースをマニュアル走行で4周したが，ハードウェアでのトラブルはなかった．
 
 \subsection{GNSS位置推定}
-ほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ
+今回の手法を使用することで，市庁舎北とピロティの区間以外のコース区間では指定した通りの自律走行が実現できた．
+上記区間を除けば，本走行，試走会ともに自己位置のロストを起因とする走行失敗・大きなルート逸脱は発生しなかった．
+しかし，同じ経路を指定して自律走行をさせた際に，最大 $1[\mathrm{m}]$ 程走行経路のずれが発生した．
+これは上位システムに起因する要素と，天気や湿度，準天頂衛星を含む測位衛星の位置といった，環境の変化が原因だと考えられる．
+つくばチャレンジの課題達成においては問題ない範囲の誤差であったが，狭路を含むルートの走行をこなすためには，3D Mappingのような他の手法を併用する必要がある．
 
-ぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよ
-
+一方，市庁舎北とピロティの区間においては指示通りの自律走行は難しく，必ず市庁舎の壁から離れる方向に進んでしまった．
+これは，市庁舎のない方向からのマルチパスにより，自己位置が実際よりも市庁舎側に寄った位置にいると誤認してしまったためと考えられる．
+前述の通り，電波を遮蔽する物体が存在する環境においては本手法による自己位置推定は難しいため，ロボットの使用環境の調査と，遮蔽物が存在する場合は代替手法の検討が必須である．
 
 \subsection{2D MAP位置推定}
 図Xに示すつくば市庁舎北エリアの区間はAMCLによる自己位置推定を使用している．図Xで示した作成した地図では，1) 図Xの位置に商用バンが止まっていた時に著しく位置精度が低下した 2) 図Xの位置で1度だけ点対象の位置に誤マッチングした，ことがあった．いずれも確率は低かったが，あらゆるシーンで走行可能にするには，3Dにすることやもっと遠くの地形を見ることなどの工夫が必要であると感じた．
 
 \subsection{障害物回避}
-狭路走行（パイロン1.2mのあいだ通れたよ）＋突然の障害物の停止結果（走行中に0.5mのところに突然パイロンおいても止まれたよ）ほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ
+屋内・屋外のコンクリート床の上で下記試験が達成できるように，コストを参照する点の位置，障害物の有無を判定する閾値の調整した．
+\begin{itemize}
+    \item 走行可能部が機体幅とほぼ同等となる $1.2[\mathrm{m}]$の幅にパイロンを設置し，その間を自律走行で通過できる
+    \item 機体が直進走行中に機体の前方  $0.5[\mathrm{m}]$の位置にパイロンを設置し，衝突することなく停止できる
+\end{itemize}
 
 \section{本走行の結果}
 本走行では，確認走行区間を超えた先のパイロン地帯でパイロンを避けずに停止してしまったため走行を断念した．パイロンを避けきれなかった原因としては，以下の原因が考えられる．
@@ -199,72 +243,72 @@ Waypointを疎に打ちすぎていた．確認走行区間では，周囲のロ
 
 
 
-\section{はじめに}
-\pkg{RBProceedings}文書クラスはW3Cにより策定されている『日本語組版の要件』\cite{JLREQ}に準拠することを目指す\pkg{jlreq}クラスをベースにしている．
-ただし，本文書クラスでは紙面スペースの都合上，多くの余白値をかなり詰めるように設定しており，例えば行間は\ruby{外国人参政権}{がい|こく|じん|さん|せい|けん}のようにルビを振れる最小限の余白に設定してある．
+% \section{はじめに}
+% \pkg{RBProceedings}文書クラスはW3Cにより策定されている『日本語組版の要件』\cite{JLREQ}に準拠することを目指す\pkg{jlreq}クラスをベースにしている．
+% ただし，本文書クラスでは紙面スペースの都合上，多くの余白値をかなり詰めるように設定しており，例えば行間は\ruby{外国人参政権}{がい|こく|じん|さん|せい|けん}のようにルビを振れる最小限の余白に設定してある．
 
-論文では，単純なテキストのみならず，しばしば数式
-\begin{equation}
-P(B\mid A) = \frac{P(A\mid B)P(B)}{P(A)}
-\end{equation}
-や箇条書き
-\begin{itemize}
-\item 第1の項目
-\item 第2の項目
-\end{itemize}
-といった構造も用いられるが，これらもよく知られた文書クラス（例えば\pkg{jsarticle}等）と同様のシンタックスで利用できる．
+% 論文では，単純なテキストのみならず，しばしば数式
+% \begin{equation}
+% P(B\mid A) = \frac{P(A\mid B)P(B)}{P(A)}
+% \end{equation}
+% や箇条書き
+% \begin{itemize}
+% \item 第1の項目
+% \item 第2の項目
+% \end{itemize}
+% といった構造も用いられるが，これらもよく知られた文書クラス（例えば\pkg{jsarticle}等）と同様のシンタックスで利用できる．
 
-\section{図表の挿入}
-図表についても通常の \LaTeX と同じ方法を用いることができる．
+% \section{図表の挿入}
+% 図表についても通常の \LaTeX と同じ方法を用いることができる．
 
-\subsection{図について}
-図の挿入は，通常\pkg{graphicx}パッケージによって行う（図\ref{fig:sample}）．
-クラスオプションにワークフロー（\code{dvipdfmx}等）を指定していれば，
-各パッケージを読み込む際に何度も同じオプションを指定する必要はない．
+% \subsection{図について}
+% 図の挿入は，通常\pkg{graphicx}パッケージによって行う（図\ref{fig:sample}）．
+% クラスオプションにワークフロー（\code{dvipdfmx}等）を指定していれば，
+% 各パッケージを読み込む際に何度も同じオプションを指定する必要はない．
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=6cm]{example-image-a}
-\caption{図の例}
-\label{fig:sample}
-\end{figure}
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=6cm]{example-image-a}
+% \caption{図の例}
+% \label{fig:sample}
+% \end{figure}
 
-\subsection{表について}
-表の挿入は，\verb|\begin{table}...\end{table}|環境を使う（表\ref{tab:sample}）．
+% \subsection{表について}
+% 表の挿入は，\verb|\begin{table}...\end{table}|環境を使う（表\ref{tab:sample}）．
 
-\begin{table}[t]
-\centering
-\caption{表の例}
-\label{tab:sample}
-\begin{tabular}{llcc}
-\hline
-日本語 & Japanese & ほげほげ & ふげふげ \\
-英語 & English & hogehoge & fugefuge \\
-\hline
-\end{tabular}
-\end{table}
+% \begin{table}[t]
+% \centering
+% \caption{表の例}
+% \label{tab:sample}
+% \begin{tabular}{llcc}
+% \hline
+% 日本語 & Japanese & ほげほげ & ふげふげ \\
+% 英語 & English & hogehoge & fugefuge \\
+% \hline
+% \end{tabular}
+% \end{table}
 
-\section{参考文献}
-参考文献の参照例．
-\begin{itemize}
-\item 論文誌の参照例 \cite{Article_01}
-\item 本の参照例 \cite{Book_02}
-\item 国際会議の参照例 \cite{Inproc_03}
-\item 技術報告の参照例 \cite{Techrep_05}
-\item Webページの参照例 \cite{Web_06}
-\end{itemize}
+% \section{参考文献}
+% 参考文献の参照例．
+% \begin{itemize}
+% \item 論文誌の参照例 \cite{Article_01}
+% \item 本の参照例 \cite{Book_02}
+% \item 国際会議の参照例 \cite{Inproc_03}
+% \item 技術報告の参照例 \cite{Techrep_05}
+% \item Webページの参照例 \cite{Web_06}
+% \end{itemize}
 
-\section{Writing in English}
-This paragraph shows an English sample.
-There is no problem with writing your manuscript in English.
-If you write in LaTeX, please use the distributed document class with the \code{english} option:
-\begin{quote}
-\verb|\documentclass[|\\
-\verb|  platex,dvipdfmx,english]{rbproceedings}|
-\end{quote}
+% \section{Writing in English}
+% This paragraph shows an English sample.
+% There is no problem with writing your manuscript in English.
+% If you write in LaTeX, please use the distributed document class with the \code{english} option:
+% \begin{quote}
+% \verb|\documentclass[|\\
+% \verb|  platex,dvipdfmx,english]{rbproceedings}|
+% \end{quote}
 
-% 参考文献
-\bibliographystyle{junsrt}
-\bibliography{myrefs}
+% % 参考文献
+% \bibliographystyle{junsrt}
+% \bibliography{myrefs}
 
 \end{document}
