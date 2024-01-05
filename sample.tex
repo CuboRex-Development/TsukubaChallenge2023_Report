@@ -121,22 +121,22 @@ GNSSでは，CLAS\cite{clas}を利用することにより基準基地局なし�
 %     \end{minipage}
 % \end{figure*}
 %
-%\begin{figure*}[tbh]
-%    \begin{minipage}[b]{.45\linewidth}
-%        \centering
-%        \includegraphics[keepaspectratio,width=70mm]{fig/cugo_tsukuba.png}
-%        \caption{つくばチャレンジ仕様 CuGo}
-%        \label{fig:cugo_ros_tsukuba}
-%    \end{minipage}
-%
-%    \begin{minipage}[b]{.45\linewidth}
-%        \centering   
-%        \includegraphics[keepaspectratio,width=70mm]{fig/cugo_ros.jpg}
-%        \caption{ROS開発キット CuGo V3}
-%        \label{fig:cugo_ros}
-%    \end{minipage}
-%\begin{figure*}
-%
+\begin{figure*}[tbh]
+   \begin{minipage}[b]{.45\linewidth}
+       \centering
+       \includegraphics[keepaspectratio,width=70mm]{fig/cugo_tsukuba.png}
+       \caption{つくばチャレンジ仕様 CuGo}
+       \label{fig:cugo_ros_tsukuba}
+   \end{minipage}
+
+   \begin{minipage}[b]{.45\linewidth}
+       \centering   
+       \includegraphics[keepaspectratio,width=70mm]{fig/cugo_ros.jpg}
+       \caption{ROS開発キット CuGo V3}
+       \label{fig:cugo_ros}
+   \end{minipage}
+\end{figure*}
+
 
 
 
@@ -194,13 +194,13 @@ GNSS低精度エリアを通過した後，ふたたびGNSSの位置推定に切
 \begin{figure}[htbp]
     \centering   
     \includegraphics[keepaspectratio,width=80mm]{fig/cityhall_fix.png}
-    \caption{確認走行区間のfix状況，青:fix，黄:float，赤:GDPS}
+    \caption{確認走行区間の測位精度悪化の状況}
     \label{fig:cityhall_fix}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/cityhall_fix.png}
+    \includegraphics[keepaspectratio,width=80mm]{fig/weak_gnss_area.png}
     \caption{GNSS低精度エリア}
     \label{fig:no_gnss_area}
 \end{figure}
@@ -329,7 +329,7 @@ GNSS低精度エリアを除けば，本走行，試走会ともに自己位置�
 \subsection{障害物回避}
 \begin{figure}[htbp]
     \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/map.png}
+    \includegraphics[keepaspectratio,width=80mm]{fig/avoidance.png}
     \caption{障害物回避のテスト}
     \label{fig:avoidance_test}
 \end{figure}
