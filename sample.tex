@@ -51,13 +51,13 @@ ${}^{1}$株式会社CuboRex
 \maketitle
 
 
-\section{はじめに}
+\section{緒言}
 近年，労働人口の減少や働き方改革により現場での作業の効率化が求められている．
 こうした背景でロボットには工場や倉庫での運搬作業やビルなどの警備，屋外では工事現場の清掃や農薬の散布などの作業が自動化されることが期待されている．
 特に，Geek+社のEVEシリーズ\cite{geek_plus}やLexxPluss社のHybrid-AMR\cite{lexxpluss}のようなAGVやAMRは大量生産を行う工場や大規模な物流倉庫での運搬の自動化を進め，SEQSENSE社のSQ-2\cite{seqsense}やugo社のugoシリーズ\cite{ugo}のような警備ロボットでは実際のビルの警備を少ない人数で運用することに成功している．
 これらのロボットでは，2D/3Dの違いはあるが使用環境で地図を作ることで自律走行を実現し，場所は限定されているが今日でも現場の効率化に絶大な効果を与えている．
 
-しかし，発電所の除草作業や工事現場の運搬作業など，屋外の現場においては大半が自動化されておらず，ラジコン操作や遠隔映像による操作のロボットで実証実験を行うところまでしか進んでいないという現状がある．
+しかし現状は，発電所の除草作業や工事現場の運搬作業など，屋外の現場においては大半が自動化されておらず，ラジコン操作や遠隔映像による操作で実証実験を行うところでとどまる．
 以上から，屋外でのロボットによる仕事の効率化や協業，代替に対してはまだまだ発展途上であると言える．
 
 CuboRexでは，一輪車を電動化した“E-cat kit2”\cite{e_cat}や走破性の高いクローラユニット“CuGo”シリーズ\cite{cugo}をリリースし，“現場のツラいをロボティクスで改善する”を掲げ，屋外での現場効率化を進める活動をしている．
@@ -72,7 +72,25 @@ GNSSでは，CLAS\cite{clas}を利用することにより基準基地局なし�
 計算資源が足りなかったことと，設定した経路が未熟であったため，もう少し距離を伸ばすことができると考えられる．
 本年度では，“ROS開発キット CuGo V3”を使用し，2DLiDAR，GNSS，ホイールオドメトリのみを使ったシンプルなナビゲーションシステムで幅広い環境で走行できるシステムを構築することができた．
 
-\begin{table}[btp]
+\section{ハードウェア}
+
+\begin{figure*}[bth]
+   \centering
+   \begin{minipage}[b]{.45\linewidth}
+       \centering   
+       \includegraphics[keepaspectratio,width=75mm]{fig/cugo_ros.jpg}
+       \caption{ROS開発キット CuGo V3}
+       \label{fig:cugo_ros}
+   \end{minipage}
+   \begin{minipage}[b]{.45\linewidth}
+       \centering
+       \includegraphics[keepaspectratio,width=75mm]{fig/cugo_tsukuba.png}
+       \caption{つくばチャレンジ仕様 CuGo}
+       \label{fig:cugo_ros_tsukuba}
+   \end{minipage}
+\end{figure*}
+
+\begin{table}[bth]
     \centering
     \caption{ロボット諸元}
     \label{tab:cugo_ros_tsukuba_spec}
@@ -90,86 +108,36 @@ GNSSでは，CLAS\cite{clas}を利用することにより基準基地局なし�
     \end{tabular}
 \end{table}
 
-
-\section{ハードウェア}
-
-% \subsection{ハードウェア概要}
-% \begin{figure*}[thp]
-%     \centering
-%     \begin{minipage}[c]{0.45\linewidth}
-%         \centering
-% +        \includegraphics[keepaspectratio,width=70mm]{fig/cugo_tsukuba.png}
-%         \caption{つくばチャレンジ仕様 CuGo}
-%         \label{fig:cugo_ros_tsukuba}
-%     \end{minipage}
-%     \begin{minipage}[c]{0.45\linewidth}
-%         \centering
-%         \caption{ロボット諸元}
-%         \label{tab:cugo_ros_tsukuba_spec}
-%         \begin{tabular}{lc}
-%             \hline
-%             前長     & 0.7 [m] \\
-%             全幅     & 0.7 [m] \\
-%             全高     & 1.3 [m] \\
-%             重量     & 33  [kg] \\
-%             最高速度 & 3.5 [m/s] \\
-%             駆動機構 & クローラ \\
-%             制御PC   & Jetson Orin NX 16GB \\
-%             モータ制御用コントローラ & Arduino Uno R3 \\
-%             \hline
-%         \end{tabular}
-%     \end{minipage}
-% \end{figure*}
-%
-\begin{figure*}[tbh]
-   \begin{minipage}[b]{.45\linewidth}
-       \centering
-       \includegraphics[keepaspectratio,width=70mm]{fig/cugo_tsukuba.png}
-       \caption{つくばチャレンジ仕様 CuGo}
-       \label{fig:cugo_ros_tsukuba}
-   \end{minipage}
-
-   \begin{minipage}[b]{.45\linewidth}
-       \centering   
-       \includegraphics[keepaspectratio,width=70mm]{fig/cugo_ros.jpg}
-       \caption{ROS開発キット CuGo V3}
-       \label{fig:cugo_ros}
-   \end{minipage}
-\end{figure*}
+\begin{figure}[h]
+    \centering   
+    \includegraphics[keepaspectratio,width=80mm]{fig/system.png}
+    \caption{ナビゲーションシステム概要図}
+    \label{fig:system}
+\end{figure}
 
 
 
-
-本年度の実験に使用したロボットの外観を以下の図 \ref{fig:cugo_ros_tsukuba} に示す．
-ハードウェアの構成を表 \ref{tab:cugo_ros_tsukuba_spec} に示す．
-つくばチャレンジ走行用ロボットには，CuboRex製自律走行ロボットの開発用プラットフォームである“ROS開発キット CuGo V3”をベースに，課題達成に必要な装備を追加した．
+つくばチャレンジ走行用ロボットには，CuboRex製自律走行ロボットの開発用プラットフォームである“ROS開発キット CuGo V3”をベースに，課題達成に必要な装備を追加した．これにより，最小限の工数でつくばチャレンジ仕様のロボットを開発することができた．
 
 \subsection{ROS開発キット CuGo V3}
-“ROS開発キット CuGo V3”は，汎用クローラユニットであるCuGo V3，それを正確に制御するマイクロコントローラとしてArduino UNO R3，ROSを実行するLinuxコンピュータとしてJetson Orin NX，測域センサとしてRPLiDAR S2E，そして，それらを駆動するバッテリーや電源システムがオールインワンとなったパッケージ製品である．
+“ROS開発キット CuGo V3”は，汎用クローラユニットであるCuGo V3，それを正確に制御するマイクロコントローラとしてArduino UNO R3，ROSを実行するLinuxコンピュータとしてJetson Orin NX，測域センサとしてRPLiDAR S2E，そして，それらを駆動するバッテリーや電源システムがオールインワンとなったパッケージ製品である．ROS開発キット CuGo V3を図\ref{fig:cugo_ros}に示す．
 これに必要に応じて3D LiDARやGNSS，カメラなどの装備を加えることで，最小限の労力でクローラロボットの開発を開始することができる．
-%
-%\begin{figure}[htbp]
-%    \centering   
-%    \includegraphics[keepaspectratio,width=70mm]{fig/cugo_ros.jpg}
-%    \caption{ROS開発キット CuGo V3}
-%    \label{fig:cugo_ros}
-%\end{figure}
-%
-
 
 \subsection{つくばチャレンジ仕様}
-本年度のつくばチャレンジでは，“ROS開発キット CuGo V3”にGNSS，デバッグ用モニター，モニター確認用のひさし，転倒防止用のステーを追加し，機体拡張のため押しやすい位置に非常停止スイッチを再設置する変更を行った．
+本年度の実験に使用したロボットの外観を図 \ref{fig:cugo_ros_tsukuba} に示す．
+ハードウェアの構成を表 \ref{tab:cugo_ros_tsukuba_spec} に示す．
+つくばチャレンジでは，“ROS開発キット CuGo V3”にGNSS，デバッグ用モニター，モニター確認用のひさし，転倒防止用のステーを追加し，機体拡張のため押しやすい位置に非常停止スイッチを再設置する変更を行った．
 後述するが，ナビゲーションシステムに使用したセンサは2DLiDAR，GNSS，ホイールオドメトリのみという非常にシンプルな構成となっている．
 計算資源も前述の“ROS開発キット CuGo V3”に搭載されたもののみで実現可能なため，比較的安価で製造しやすい屋外走行ロボットとなった．
-% 計算資源としてもJetson Orin NXというシングルボードコンピュータ1台とモータ制御用のArduino UNO R3のコントローラで構成されており，比較的安価で製造しやすい屋外走行ロボットとなった．
 
 \section{ナビゲーションシステム}
 \subsection{ナビゲーション概要}
+
 本年度のつくばチャレンジのナビゲーションシステム構成図を図\ref{fig:system}に示す．
 このシステムでは，基本的にみちびきのセンチメーター級測位補強信号を使って補正したGNSSの測位結果を使用して目的地を目指す．
 2023年のコースから，GNSSの信号を遮る屋根や建物の直下を通る，市庁舎の北側から東側にかけての区間がコースに追加された．
-このエリアを通過するとき， 図\ref{fig:cityhall_fix} のようにGNSSの測位精度の悪化を確認できたため，このエリアに限って地図を作成し地図に対して位置推定を行った．
-(以下，図\ref{fig:no_gnss_area}の通り，この区間を”GNSS低精度エリア”とする．)
+このエリアを通過するとき， 図\ref{fig:cityhall_fix} のようにGNSSの測位精度の悪化を確認できたため，このエリアに限って地図を作成し地図に対して位置推定を行った
+(以下，図\ref{fig:no_gnss_area}の通り，この区間を”GNSS低精度エリア”とする)．
 GNSS低精度エリアを通過した後，ふたたびGNSSの位置推定に切り替えて走行することにより，大規模な地図を作成することなく長距離の自律走行を実現した．
 この章では，以下の順番でナビゲーションシステムの詳細について説明する．
 
@@ -184,39 +152,49 @@ GNSS低精度エリアを通過した後，ふたたびGNSSの位置推定に切
     \item その他開発支援ツール
 \end{itemize}
 
-\begin{figure}[htbp]
-    \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/system.png}
-    \caption{ナビゲーションシステム概要図}
-    \label{fig:system}
-\end{figure}
+%\begin{figure}[htbp]
+%    \centering   
+%    \includegraphics[keepaspectratio,width=80mm]{fig/cityhall_fix.png}
+%    \caption{確認走行区間の測位精度悪化の状況}
+%    \label{fig:cityhall_fix}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%    \centering   
+%    \includegraphics[keepaspectratio,width=80mm]{fig/weak_gnss_area.png}
+%    \caption{GNSS低精度エリア}
+%    \label{fig:no_gnss_area}
+%\end{figure}
+%
+\begin{figure*}[tbh]
+   \centering
+   \begin{minipage}[b]{.45\linewidth}
+       \centering   
+       \includegraphics[keepaspectratio,width=75mm]{fig/cityhall_fix.png}
+       \caption{確認走行区間の測位精度悪化の状況}
+       \label{fig:cityhall_fix}
+   \end{minipage}
+   \begin{minipage}[b]{.45\linewidth}
+       \centering
+       \includegraphics[keepaspectratio,width=75mm]{fig/weak_gnss_area.png}
+       \caption{GNSS低精度エリア}
+       \label{fig:no_gnss_area}
+   \end{minipage}
+\end{figure*}
 
-\begin{figure}[htbp]
-    \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/cityhall_fix.png}
-    \caption{確認走行区間の測位精度悪化の状況}
-    \label{fig:cityhall_fix}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/weak_gnss_area.png}
-    \caption{GNSS低精度エリア}
-    \label{fig:no_gnss_area}
-\end{figure}
 
 \subsection{GNSSによる位置推定}\label{ss:gnss_localization}
-ロボットの内部にCLAS受信モジュールD9CX1とRTKモジュールF9PX1を，機体上部にGNSSアンテナJCA228Eをそれぞれ1組搭載し，CLASによる測位を5Hzで行った．
+ロボットの内部にジオセンス社製のCLAS受信モジュールD9CX1とRTKモジュールF9PX1を，機体上部にGNSSアンテナZHEJIANG JC Antenna社製のJCA228Eをそれぞれ1組搭載し，CLASによる測位を5Hzで行った．
 CLASとはセンチメートル級測位サービスを示し，準天頂衛星みちびきが配信する補強信号を受信することで，日本国内では精度の高い測位が可能となるサービスである．
 CLASの移動体における水平方向の測位精度は，$12[\mathrm{cm}] (95 \%)$以下である．
 つくばチャレンジにおいては，本走行コースのゴール地点の緯度・経度 $(36.0826686 ,140.0775115)$ を原点として，測位された緯度・経度との差分を自己位置とした．
-ロボットの姿勢角推定は，図\ref{fig:gnss_orientaiton} のように前回時間からの移動量をもとに算出した姿勢を自己位置とした．
+ロボットの姿勢角は，図\ref{fig:gnss_orientaiton} のように前回時間からの移動量をもとに推定し，姿勢角とした．
 ただし，精度向上のため姿勢角の算出は下記の条件を満たす際のみ適用し，それ以外の状況では姿勢角を算出しなかった。
 \begin{itemize}
     \item ロボットの直進速度が $0.3[\mathrm{m/s}]$ 以上
     \item ロボットの旋回速度が $0.3[\mathrm{rad/s}]$ 以下
 \end{itemize}
-姿勢角が算出されない期間における姿勢角の位置推定は，後述のセンサフュージョンにより補間した．
+姿勢角を算出しない期間における姿勢角の位置推定は，後述のセンサフュージョンにより補間した．
 
 
 
@@ -228,17 +206,15 @@ CLASの移動体における水平方向の測位精度は，$12[\mathrm{cm}] (9
 \end{figure}
 
 \subsection{2D地図による位置推定}\label{ss:map_localization}
-ロボット下部に取り付けられた2DLiDARを使って図\ref{fig:no_gnss_area}のつくば市庁舎周辺の地図を作成した．
+ロボット下部に取り付けられた2DLiDARを使って図\ref{fig:map}のつくば市庁舎周辺の地図を作成した．
 2DLiDARは地面から120mmの位置に取り付けてあり，周囲360度，最大30mまでの距離を得ることができる．
-SLAMはCartographer[9]を利用した．
+SLAMはCartographer\cite{cartographer}を利用した．
 確認走行区間のルートを1.5周したセンサデータを使い，パラメータを調整して地図を作成した．
-作成した地図は図\ref{fig:map}に示す．
-実際のナビゲーションでは，GNSS低精度エリアとその前後5m程において，この地図から求められる自己位置を使用した．
-走行する際の地図の位置推定には， nav2\_ AMCLを利用した．
-（場合によってカットする）Cartographerで地図を作成する際にループクローズが発生するが，そのパラメータはGNSS低精度エリアの直線部の精度が最も高くなるように調整した．
-この調整をしないと，ループクローズしたときの誤差の勾配がちょうど北エリアで詳細するため，GNSSによる自己位置と地図による自己位置にずれが発生する．
+CartographerでのSLAMでは，ループクローズで修正される地図をGNSS低精度エリアの直線部の精度が最も高くなるように調整した．
+この調整をしないと，ループクローズしたときの誤差がちょうどGNSS低精度エリアで消失し，ロボットが走行するルート上の地図が歪む．GNSSによる位置と地図による自己位置にずれが発生するため，丁寧に調整した．
 
-
+実際のナビゲーションでは，GNSS低精度エリアに入る直前のWaypointでGNSSの値から地図を初期位置を入力し地図の位置推定を開始している．
+走行する際の地図の位置推定には， nav2\_ AMCL\cite{nav2}を利用した．
 \begin{figure}[htbp]
     \centering   
     \includegraphics[keepaspectratio,width=80mm]{fig/map.png}
@@ -258,85 +234,94 @@ GNSSと2D地図の位置との切り替えのため，Pose Selectorを作成し�
 IMUは9軸で地磁気を利用して絶対角を取得していたが，市庁舎北エリアの急速充電器付近で非常に強いノイズを受け，GNSS低精度エリアでの姿勢角の精度悪化が無視できなかった．
 そのため，IMUのセンサデータは共分散を非常に大きな値に設定していて，実質使用していない．
 
-ホイールオドメトリの値は，作動二輪モデルから  \textbackslash nav\_ msgs \textbackslash Odometryの値を算出して利用した．
-GNSSの姿勢は前項の通り，直前の連続した位置からロボットの向いている方向を推定し  \textbackslash nav\_ msgs \textbackslash Odometryに格納した．
-AMCLの位置推定結果は \textbackslash tfでの出力は無効化して，  \textbackslash nav\_ msgs \textbackslash Odometryに変換して利用した．
+ホイールオドメトリの値は，作動二輪モデルから$\left[ x, y, \theta \right] ^\top$の値を算出して利用した．
+GNSSの姿勢は前項の通り，測位した絶対位置$x, y$と直前の連続した位置からロボットの向いている方向$\theta$を推定し $\left[ x, y, \theta \right] ^\top$に格納した．
+AMCLの位置推定結果は ROSのtfの出力は無効化して，  $\left[ x, y, \theta \right] ^\top$に変換して利用した．
 
-3つの \textbackslash nav\_ msgs\textbackslash Odometry をrobot\_ localization[10]パッケージを利用してEKF処理をし，ロボットの自己位置としてナビゲーションに利用した．
+3つの $\left[ x, y, \theta \right] ^\top$をrobot\_ localization\cite{localization}パッケージを利用してEKF処理をし，ロボットの自己位置としてナビゲーションに利用した．
 
 \subsection{Waypontの設定}
-Waypointの設定は，\ref{ss:sensor_fusion} で推定したロボットの自己位置をそのまま記憶するツールを作成し，使用した．
-GNSSと2D地図の位置推定のどちらの状態であっても，先述の通り，ロボットが認識する自己位置は変わらないため，現在認識している自己位置をそのままキーボード操作をトリガーにcsvファイルに記憶する．
+Waypointの設定は，\ref{ss:sensor_fusion} で推定したロボットの自己位置をそのまま記憶するツールを作成し使用した．
+GNSSと2D地図の位置推定のどちらの状態であっても，先述の通り，ロボットが認識する座標の次元は変わらないため，現在認識している自己位置をそのままキーボード操作をトリガーにcsvファイルに記憶する．
 実験走行では，当日の午前にロボットを走行させたい経路の通りにコントローラでマニュアル操作し，2mおきのWaypointを記憶させた．
 午後に検定を実施し，作成したWaypoint列のcsvファイルをナビゲーションシステムに読み込ませて自律走行を行った．
 
 \subsection{経路計画}
-ロボットの自己位置からWaypointまでの走行経路の生成は，ROS 2標準のNavigation2[11]をそのまま利用した．
-Waypointまでの経路はA*アルゴリズム[12]で算出し，その経路をRegulatedPurePersuit[13]で追従した．
+ロボットの自己位置からWaypointまでの走行経路の生成は，ROS 2標準のNavigation2\cite{nav2}をそのまま利用した．
+Waypointまでの経路はNavFn Planner\cite{navfn}で算出し，その経路をRegulatedPurePersuit\cite{rrp}で追従した．
 
 \subsection{障害物回避} \label{ss:avoidance}
-障害物の回避には2DLiDARを使用し，ROS 2標準のNavigation2[11]によるものをそのまま利用した．
-しかし，2DLiDARを使用しているためパイロンのような起伏のある形状の障害物を回避できないことがある，経路生成が行われるより前に衝突する箇所に障害物が発生した際に避けられない，という問題があった．
-そのため，前述の機能に加えて，経路生成より高速で処理が可能な障害物判定機能を追加した．
-具体的な処理は，コストマップで機体前方の点のコストを常に参照し，定点のコストが閾値以上となった際には停止させるものとした．
-この閾値を低くすることで障害物に対する接近を抑制することが可能となり，障害物が接近した時点で停止することで，起伏のある形状の障害物との衝突を回避できた．
+障害物の回避には2DLiDARを使用し，ROS 2標準のNavigation2によるものをそのまま利用した．
+しかし，2DLiDARを使用しているため，パイロンのようなLiDARの切片より根本が太い形状の障害物を回避できないことがある，経路生成が行われるより前に衝突する箇所に障害物が発生した際に避けられない，という問題があった．
+以上の問題点を回避するために，Plannerに障害物判定機能を追加した．
+具体的な処理は，コストマップで機体前方の決められた点のコストを常に参照し，コストが閾値以上となった際には停止させるものとした．
+これにより障害物に不必要に接近する前に停止することで，パイロンなどの障害物の衝突を回避することが確認できた．
 
 \subsection{その他開発支援ツール}
 現場でのロボットのデバッグは，さまざまな条件の中で何が起きたかを素早く発見し，迅速に修正することが大切である．
-ロボットの状態確認としては，下記3項目を読み上げツールによってロボットにしゃべらせた．
+デバッグで知りたい情報をすべて画面に表示しても，見逃さなずに知ることは難しい．
+本年度は，下記3項目を読み上げツールによってロボットにしゃべらせ，デバッグに利用した．
 \begin{itemize}
     \item 次の目標のWaypointのID
     \item フラグ管理で正常でない組み合わせが発生したことの通知
     \item センサや中間ノードからトピックが来なくなった時の通知
 \end{itemize}
-これにより，異常なゴール判定，想定できなかった状態遷移，各種機能の失陥をいち早く知ることができ，対策を本走行当日までに適用することができた．
-読み上げツールはOpenJTalk[12]を使用し，文字列のトピックを受け取るとそのまま読み上げるアプリケーションを作成し，ロボットに搭載されたディスプレイのスピーカーから音声を再生することで実現した．
+しゃべらせることで，異常なゴール判定，想定できなかった状態遷移，各種機能の失陥をいち早く知ることができ，対策を本走行当日までに適用することができた．
+読み上げツールはOpenJTalk\cite{openjtalk}を使用し，文字列のトピックを受け取るとそのまま読み上げるアプリケーションを作成し，ロボットに搭載されたディスプレイのスピーカーから音声を再生することで実現した．
 
 \section{性能評価}
 \subsection{ハードウェア走行性能}
 走行ハードウェアとしては，CuboRex製のクローラユニットであるCuGo V3を使用した．
 研究学園前公園の階段の乗降はできないが，必須課題の走行コースで問題になる段差はなかった．
-また，斜面のある通路，雨天時の走行においても，ほとんどクローラが滑ることなく走行，停止が可能だった．
+また，斜面のある通路，雨天時の実験走行会においても，ほとんどクローラが滑ることなく走行することができた．
 7/15の実験走行では，炎天下の中必須課題の走行コースをマニュアル走行で4周したが，ハードウェアでのトラブルはなかった．
 
-\subsection{GNSS位置推定}　\label{ss:gnss_eval}
+\subsection{GNSSによる位置推定}　\label{ss:gnss_eval}
 今回の手法を使用することで，GNSS低精度エリア以外のコース区間では指定した通りの自律走行が実現できた．
 GNSS低精度エリアを除けば，本走行，試走会ともに自己位置のロストを起因とする走行失敗・大きなルート逸脱は発生しなかった．
 しかし，同じ経路を指定して自律走行をさせた際に，最大 $0.5[\mathrm{m}]$ 程走行経路のずれが発生した．
-これは上位システムに起因する要素と，天気や湿度，準天頂衛星を含む測位衛星の位置といった，環境の変化が原因だと考えられる．
-つくばチャレンジの課題達成においては問題ない範囲の誤差であったが，狭路を含むルートの走行をこなすためには，3D Map Localizationのような他の手法を併用する必要がある．
+このずれは，周囲の障害物やロボットの進入角などさまざまな要因からなるため，一意にGNSSのずれとは言えないが，道路端停止の課題においていは，日によっては1m以内に停止できないこともあり，精密な位置調整に関しては課題が残った．
+つくばチャレンジの課題達成においては問題ない範囲の誤差であったが，狭路を含むルートの走行をこなすためには，Plannerの障害物回避の調整が必要であった．
 
-一方，GNSS低精度エリアにおいては指示通りの自律走行は難しく，必ず市庁舎の壁から離れる方向に進んでしまった．
-これは，市庁舎のない方向からのマルチパスにより，自己位置が実際よりも市庁舎側に寄った位置にいると誤認してしまったためと考えられる．
-前述の通り，電波を遮蔽する物体が存在する環境においては本手法による位置推定は難しいため，ロボットの使用環境の調査と，遮蔽物が存在する場合は代替手法の検討が必須である．
+一方，GNSS低精度エリアにおいては，指定されたWaypointをたどることができなかった．このエリアでは，マルチパスの影響を受けロボットの位置が建物の内部にあるように認識した．進路を戻そうと経路を修正することで，正しい経路からより逸脱していき復帰することができなかった．
+開けた環境であれば，GNSSの位置を一意に信じて進むことはできるが，観測を阻害する環境であれば，走行を継続することができなくなってしまうため，本システムのように別の方法と併用することが望ましい．
+
+\begin{figure*}[htbp]
+   \centering
+   \begin{minipage}[b]{.45\linewidth}
+       \centering   
+       \includegraphics[keepaspectratio,width=75mm]{fig/map_lost.png}
+       \caption{2D地図の位置推定で発生した事象}
+       \label{fig:map_lost}
+   \end{minipage}
+   \begin{minipage}[b]{.45\linewidth}
+       \centering
+       \includegraphics[keepaspectratio,width=75mm]{fig/avoidance.png}
+       \caption{障害物回避のテスト}
+       \label{fig:avoidance_test}
+   \end{minipage}
+\end{figure*}
 
 \subsection{2D地図の位置推定}
-\begin{figure}[htbp]
-    \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/map.png}
-    \caption{2D地図の位置推定で発生した事象}
-    \label{fig:map_lost}
-\end{figure}
-
 図\ref{fig:no_gnss_area}に示すGNSS低精度エリアとその前後は，AMCLによる位置推定を使用している．
 図\ref{fig:map}で示した作成した地図では，下記2点の事象が発生した．
 \begin{itemize}
-    \item 図\ref{fig:map_lost}の位置1 に商用バンが止まっていた時に著しく位置精度が低下した
-    \item 図\ref{fig:map_lost}の位置2 で1度だけ点対象の位置に誤マッチングしたことがあった．
+    \item 図\ref{fig:map_lost}の地点A に商用バンが止まっていた時に著しく位置精度が低下した
+    \item 図\ref{fig:map_lost}の地点B で1度だけ点対称の位置に誤マッチングしたことがあった．
 \end{itemize}
-いずれも確率は低かったが，あらゆるシーンで走行可能にするには，3Dにすることやもっと遠くの地形を見ることなどの工夫が必要であると感じた．
+いずれも確率は低かったが，あらゆるシーンで走行するには，マッチングの特徴量やもっと遠くの地形を見ることなどの工夫が必要であると感じた．
 
 \subsection{障害物回避}
-\begin{figure}[htbp]
-    \centering   
-    \includegraphics[keepaspectratio,width=80mm]{fig/avoidance.png}
-    \caption{障害物回避のテスト}
-    \label{fig:avoidance_test}
-\end{figure}
+%\begin{figure}[htbp]
+%    \centering   
+%    \includegraphics[keepaspectratio,width=80mm]{fig/avoidance.png}
+%    \caption{障害物回避のテスト}
+%    \label{fig:avoidance_test}
+%\end{figure}
 
 屋内・屋外のコンクリート床の上で下記2点試験が達成できるように，コストを参照する点の位置，障害物の有無を判定する閾値の調整した．
 \begin{itemize}
-    \item 走行可能部が機体幅とほぼ同等となる $1.2[\mathrm{m}]$の幅にパイロンを設置し，その間を自律走行で通過できる
+    \item $1.2[\mathrm{m}]$の幅にパイロンを設置し，その間を自律走行で通過できる
     \item 図 \ref{fig:avoidance_test} のように機体が直進走行中に機体の前方  $0.5[\mathrm{m}]$の位置にパイロンを設置し，衝突することなく停止できる
 \end{itemize}
 
@@ -347,23 +332,23 @@ GNSS低精度エリアを除けば，本走行，試走会ともに自己位置�
     \item 経路計画の動作周期が遅かった \label{enum:calc_rate}
     \item 障害物を発見した際に停止する仕様とした \label{enum:stop}
     \item Waypointを疎に打ちすぎていた \label{eunm:waypoint}
-    \item 当日のGNSSの値が最大0.5mほどずれていた．\label{eunm:gnss}
+    \item 当日の自己位置の値が最大0.5mほどずれていた．\label{eunm:gnss}
 \end{enumerate}
 
-\ref{enum:calc_rate} . は，経路計画の動作周波数が1Hzだったため，パイロンを回避する経路が引かれる前に，\ref{ss:avoidance} に記載したロボットの停止が発生する位置までロボットが走行を続けたと考えられる．
+\ref{enum:calc_rate} . に関して，経路計画の動作周波数が1Hzだったため，パイロンを回避する経路が引かれる前に，\ref{ss:avoidance} の停止機能が有効になる位置まで走り続けたと考えられる．
 もとより，GNSSのみでどこまで走行できるかを主眼として開発を進めていた時期があり，GNSSと2D地図の位置推定が同居することを想定していなかった．
 本番直前にシステムを大幅に肥大化させたことにより，最適化が進まず計算資源不足に陥ってしまったため，さまざまな制御周期を下げる対応をした．
 これにより，経路計画の動作周波数が1Hzとなってしまい，回避行動をとる前に障害物を認識する前の行動を続けてしまった．
 また，周囲の障害物を避けるコストマップの範囲も大幅に小さく設定したため，ロボットが障害物を発見するのにより障害物に近づいた状態でないと障害物に気づけない状況になっていた．
 
-\ref{enum:stop} . に関して，ロボットが他のロボットなどの障害物を回避する手段として，積極的に回避することをせずにその場でとどまることを選択してしまった．
+\ref{enum:stop} . に関して，ロボットが他のロボットなどの障害物を回避する手段として，積極的に回避することをせずにその場でとどまることを選択してした．
 回避行動をとっていればとどまることはないが，回避行動をとることができず，この仕様によってデッドロックしてしまった．
 
 \ref{eunm:waypoint} .に関して，確認走行区間では周囲のロボット以外の障害物は明確に知ることができており，Waypointを1.5mおきに密に設置し走行経路を明確に定義することで安定した走行を実現していた．
-しかし，パイロン区間は日によってパイロンの設置位置が変わるため，Waypointの密度を10m以上の疎な設定していた．
+しかし，パイロン区間は日によってパイロンの設置位置が変わるため，Waypointの密度を10m以上空けた設定していた．
 これによりパイロンから積極的に離れる経路にはならず，繰り返しパイロンに向かって走行する挙動をしてしまった．
 
-\ref{eunm:gnss} .に関して，GNSSの値は以前より比較的高精度に位置推定をすることができるようになったが，\ref{ss:gnss_eval} に記載した通り，位置推定の誤差が大きくなる場合が存在する．
+\ref{eunm:gnss} .に関して，GNSSの値は以前より比較的高精度に位置推定をすることができるようになったが，\ref{ss:gnss_eval} に記載した通り，推定した位置が大きくずれる場合が存在する．
 ロボットが停止してしまった区間は理想的なオープンスカイな環境ではあったが，もとから設定したWaypointの位置より0.5m程度北にずれた位置を走行していた．
 パイロン地帯でも比較的設置されにくい点字ブロックに沿って走行をする経路を設定したが，そこから北にずれた経路を走行していたため積極的にパイロンが多い経路を走行し，パイロンを避けきれないケースが発生した．
 
